@@ -12,44 +12,57 @@ let usuario = prompt("Ingrese Nombre y Apellido");
 let usuarioStorage = localStorage.getItem(`${usuario}`);
 let objeto = JSON.parse(usuarioStorage);
 
+
+
 if (usuarioStorage) {
     usuario = usuarioStorage;
 
     objeto.forEach((item) => {
         let div = document.createElement("div");
+        let info = productos.find((prod) => prod.nombre === item.producto)
         div.innerHTML = `
-         <h2>Cliente: ${item.nombre}</h2>
+            <h2>Cliente: ${item.nombre}</h2>
           <p>Localidad: ${item.localidad}</p>
-          <b>Producto solicitado: ${item.producto}
-          Informacion: ${productos.informacion}</b>
-         <br>
-          <button id="eliminar"> Eliminar registro<button/>
-     `;
+           <p>Producto solicitado: ${item.producto}</p> 
+           <p>Informacion: ${info.informacion}</p>
+           <br>
+           <button id="eliminar"> Eliminar registro<button/>
+        `;
 
         document.body.append(div);
-    });
+
+        let eliminar = document.getElementById("eliminar");
+        eliminar.addEventListener("click", () => {
+            localStorage.removeItem(`${item.nombre}`)
+            alert("Regristo Borrado");
+            location.reload();
+        });
+
+
+
+    })
 
 } else {
     alert("Tienes que registrarte")
     let div = document.createElement("div");
     div.innerHTML = `
 
-<form id="formulario" method="get">
-<label for="nombre">Nombre y Apellido</label>
-<input id ="nombre" type= "text" >
-<label for="dni">D.N.I</label>
-<input id="dni" type="number" >
-<label for="Localidad">Localidad</label>
-<input id = "Localidad" type="text" >
-<label for="productoDeseado">Producto deseado</label>
-<input id="producto" type="text"  >
-<input id="boton" type="submit" value="Enviar">
-</form> 
+     <form id="formulario" method="get">
+     <label for="nombre">Nombre y Apellido</label>
+     <input id ="nombre" type= "text" >
+     <label for="dni">D.N.I</label>
+     <input id="dni" type="number" >
+     <label for="Localidad">Localidad</label>
+     <input id = "Localidad" type="text" >
+     <label for="productoDeseado">Producto deseado</label>
+     <input id="producto" type="text"  >
+     <input id="boton" type="submit" value="Enviar">
+     </form> 
 
-
-`;
+    `;
 
     document.body.append(div);
+
 
     let formulario = document.getElementById("formulario");
 
@@ -73,34 +86,39 @@ if (usuarioStorage) {
 
             div.remove();
 
+
             clientes.forEach((item) => {
                 let div = document.createElement("div");
+                let info = productos.find((prod) => prod.nombre === cliente.producto)
                 div.innerHTML = `
-        <h2>Cliente: ${item.nombre}</h2>
-        <p>Localidad: ${item.localidad}</p>
-        <b>Producto solicitado: ${item.producto}
-        Informacion: ${productos.informacion}</b>
-        <br>
-        <button id="eliminar"> Eliminar registro<button/>
-        `;
+                 <h2>Cliente: ${item.nombre}</h2>
+                 <p>Localidad: ${item.localidad}</p>
+                 <p>Producto solicitado: ${item.producto}</p>
+                 <p>Informacion: ${info.informacion}</p>
+                 <br>
+                 <button id="eliminar"> Eliminar registro<button/>
+                `;
 
                 document.body.append(div);
-            });
+
+                let eliminar = document.getElementById("eliminar");
+                eliminar.addEventListener("click", () => {
+                    localStorage.removeItem(`${item.nombre}`)
+                    alert("Regristo Borrado");
+                    location.reload();
+                });
+            })
+
         } else {
             alert("Elija entre prestamos, seguros e inversiones")
         }
     });
 };
-let eliminar = document.getElementById("eliminar");
-eliminar.addEventListener("click", () => {
-    localStorage.clear();
-    alert("Regristo Borrado");
 
 
-
-})
-
-
+const botonEliminar = {
+    
+}
 
 
 
